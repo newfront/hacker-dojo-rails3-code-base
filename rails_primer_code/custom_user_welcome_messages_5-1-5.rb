@@ -16,9 +16,9 @@ class SayHello
 
   def greet_me
     message = case
-              when 1 then "Welcome #{@@username}, click here to view our tour"
-              when 2 then "Welcome Back! #{@@username}"
-              when 3 then "Welcome Super-User #{@username}. We love you"
+              when @@user_level == 1 then "Welcome #{@@username}, click here to view our tour"
+              when @@user_level == 2 then "Welcome Back! #{@@username}"
+              when @@user_level == 3 then "Welcome Super-User #{@@username}. We love you"
               else "You are not registered yet, or we screwed up our code"
               end
     puts message
@@ -26,5 +26,5 @@ class SayHello
   end
 end
 
-n = SayHello.new("Scott",3)
+n = SayHello.new("Scott",2)
 n.greet_me 
