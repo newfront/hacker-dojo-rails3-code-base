@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>create_chat_server (Chat)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File Chat.rb, line 27</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create_chat_server</span>
+        <span class="ruby-ivar">@@server</span> = <span class="ruby-constant">TCPServer</span>.<span class="ruby-identifier">open</span>(<span class="ruby-ivar">@@port</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Chat Server up and running on port #{@@port}&quot;</span>
+        
+        <span class="ruby-comment cmt"># Start a Loop to listen to incoming messages</span>
+        <span class="ruby-identifier">loop</span> {
+            <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">start</span>(<span class="ruby-ivar">@@server</span>.<span class="ruby-identifier">accept</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">user</span><span class="ruby-operator">|</span>
+                <span class="ruby-comment cmt"># self is Chat Object even though we are in a new Thread</span>
+                <span class="ruby-comment cmt">#puts &quot;Who am i? #{self.inspect}&quot;</span>
+                
+                <span class="ruby-comment cmt">#info = user.peeraddr</span>
+                <span class="ruby-comment cmt">#ip = info[3].gsub(/[::A-Za-z]/,'')</span>
+                
+                <span class="ruby-identifier">message</span> = <span class="ruby-identifier">user</span>.<span class="ruby-identifier">gets</span>.<span class="ruby-identifier">chop!</span>
+                <span class="ruby-identifier">json_message</span> = <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">message</span>)
+                <span class="ruby-identifier">current_user</span> = <span class="ruby-identifier">json_message</span>[<span class="ruby-value str">&quot;user&quot;</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">json_message</span>[<span class="ruby-value str">&quot;user&quot;</span>].<span class="ruby-identifier">nil?</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Message is now #{json_message.inspect}&quot;</span>
+                <span class="ruby-comment cmt">#user.close</span>
+                
+                <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">json_message</span>[<span class="ruby-value str">&quot;message&quot;</span>].<span class="ruby-identifier">nil?</span>
+                    <span class="ruby-comment cmt"># At this point we know we are working with messages</span>
+                    <span class="ruby-comment cmt"># and Objects and also that we have a message to work with</span>
+                <span class="ruby-keyword kw">else</span>
+                    <span class="ruby-comment cmt"># otherwise, fail closed and kill this socket connection</span>
+                    <span class="ruby-identifier">user</span>.<span class="ruby-identifier">close</span> 
+                <span class="ruby-keyword kw">end</span>
+                
+                <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">respond_to_message</span>(<span class="ruby-identifier">json_message</span>[<span class="ruby-value str">&quot;message&quot;</span>],<span class="ruby-identifier">current_user</span>)
+                
+            <span class="ruby-keyword kw">end</span>
+        }
+    <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>
