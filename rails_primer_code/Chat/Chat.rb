@@ -61,6 +61,12 @@ class Chat
     def respond_to_message(message, user)
        puts "Got a message of '#{message}' from the User #{user.inspect}" 
        
+       case message
+       when "login"
+           puts "User wishes to login"
+           break
+           
+       end
        # use the case Condition to respond to different requests
        # login
        # logout
