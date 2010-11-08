@@ -15,6 +15,7 @@
 
 class Greeter
   
+  # declare @@name as an empty string
   @@name = ''
 
   def initialize(str)
@@ -22,6 +23,7 @@ class Greeter
   end
 
   def say_hello
+      #returns nil
     puts "Hello, #{@@name}" 
   end
 

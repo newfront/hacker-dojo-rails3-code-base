@@ -31,6 +31,7 @@ class Chat
         # Start a Loop to listen to incoming messages
         loop {
             Thread.start(@@server.accept) do |user|
+                puts "User info: #{user.inspect}"
                 # self is Chat Object even though we are in a new Thread
                 #puts "Who am i? #{self.inspect}"
                 
