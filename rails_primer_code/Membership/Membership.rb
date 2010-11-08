@@ -1,13 +1,15 @@
-#!/usr/bin/ruby -w
+#!/usr/local/ruby19/binruby -w
 
 # = Membership System
 # Check to see if a Membership is expired
-require 'rubygems' #note. Ruby 1.9 includes rubygems by default, so this is not nessesary
+#require 'rubygems' #note. Ruby 1.9 includes rubygems by default, so this is not nessesary
+require 'rubygems'
 require 'hashie'
+require 'time'
 
 # parsedate will take a String and return a Time object
-require 'parsedate'
-include ParseDate
+#require 'parsedate'
+#include ParseDate
 
 class Membership
     
@@ -28,8 +30,10 @@ class Membership
         last_real_payment = @@user.membership.payment_date
         
         # Convert the Users last payment to a Time object from String
-        last_payment_as_time = Time.local(*parsedate(last_real_payment))
-        
+        # Time.parse(last_real_payment) 
+        # Time.parse replaces parsedate in 1.9+
+        # last_payment_as_time = Time.local(*parsedate(last_real_payment)) #1.8.7 syntax
+        last_payment_as_time = Time.parse(last_real_payment)
         #parse the date string and compare the current Time against the last payment made by the User
         
         # if the users payment datetime plus the (subscription period) is greater than or equal to the current datetime
@@ -90,7 +94,7 @@ user.membership.payment_date = "Fri Nov 05 21:06:22 -0700 2010"
 #user.membership.payment_date = "Fri May 05 21:06:22 -0700 2010"
 
 # Create a new Membership Object
-member = Membership.new(user,60)
+member = Membership.new(user,30)
 member.am_i_good?
 
 # Reference a Class from within another Class
