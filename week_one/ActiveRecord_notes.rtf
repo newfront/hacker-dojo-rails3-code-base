@@ -1,0 +1,393 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf350
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww12100\viewh10160\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\b\fs24 \cf0 MySQL\
+(
+\b0 if you want to use mysql2 gem)\
+mysql2 gem\
+sudo /usr/local/ruby19/bin/gem install mysql2\
+\
+Person (model)\
+people_controller (controller)\
+\
+person_id\
+\
+>> rails console (open up the rails integrated console)\
+\
+
+\b >> Person
+\b0 \
+(Shows everything you need to know about the db Model)\
+\
+=> #<Person id: nil, name: nil, age: nil, description: nil, priority: nil, log_date: nil, created_at: nil, updated_at: nil>\
+\
+>> 
+\b p = Person.new
+\b0  \
+=> Creates new Person Object\
+\
+
+\b >> p.class
+\b0 \
+\
+=> Person(id: integer, name: string, age: integer, description: text, priority: integer, log_date: datetime, created_at: datetime, updated_at: datetime)\
+\
+
+\b >> p.is_a? Person
+\b0 \
+=> true\
+\
+
+\b Creating Records\
+
+\b0 (Based off of the Person model)\
+\
+>> p = Person.new\
+\
+>> p.new_record?\
+=> true\
+\
+>> p.name = "Scott"\
+>> p.age = 26\
+>> p.description = "I love to write code with Ruby on Rails"\
+>> p.priority = 1\
+>> p.log_date = Time.now.to_s\
+>> p.save\
+=> true\
+\
+
+\b >> p.new_record?
+\b0 \
+=> false\
+\
+Alternatively, you can create the new Object all in one fell swoop. \
+\
+>> Person.create(:name => "Scott Haines", :age => 26, :priority => 3, :log_date => Time.now.to_s, :description => "I love to program")\
+\
+Above we create a new Person Object, add values for the core Object variables, and then use the 
+\b save
+\b0  method to save to our database.\
+\
+
+\b Looking up Records
+\b0 \
+\
+>> Person.find(:all)\
+=> \
+\
+>> Person.find.first\
+>> Person.find.last\
+\
+>> Person.find_by_name("Scott Haines")\
+\
+>> Person.find(:first, :conditions => \{:name => "Scott Haines")\
+\
+>> Person.where(:name => "Scott Haines")\
+\
+>> Person.find(:all).each \{|people| puts "Found new object #\{people.inspect\}"\}\
+\
+
+\b Updating Records\
+\
+
+\b0 >> p = Person.first
+\b \
+
+\b0 >> p.update_attributes(:name => "Scott Haines2")\
+=> true\
+\
+>> p = Person.first\
+>> p.name = "Scott"\
+>> p.save\
+=> true\
+\
+
+\b Deleting Records\
+
+\b0 \
+>> Person.all.count => 2\
+>> p = Person.first\
+>> p.destroy\
+\
+=> outputs the Object values that have been removed\
+\
+>> Person.all.count => 1\
+\
+>> Person.first.delete\
+\
+
+\b Recovering Errors\
+\
+
+\b0 >> p.errors.any?\
+\
+\
+Process\
+(Assuming your in command line at app root)\
+1. Create Blog\
+>> rails generate model Article title:string published_at:datetime body:text\
+>> rake db:migrate\
+\
+(Note: rake db:schema:load will update your MySQL schema)\
+\
+2. Check your work\
+\
+>> rails console\
+\
+(try to create a new Article)\
+\
+>> a = Article.new\
+=> #<Article id: nil, title: nil, published_at: nil, body: nil, created_at: nil, updated_at: nil>\
+>> a.title = "Brushing off Cat Hair"\
+=> "Brushing off Cat Hair"\
+>> a.published_at = Time.now.to_s\
+=> "Fri Nov 12 21:01:14 -0800 2010"\
+>> a.save\
+=> false\
+>> a.body = "Me Me Me"\
+=> "Me Me Me"\
+>> a.save\
+=> true\
+>> a.errors.any?\
+=> false\
+\
+You notice that you can only 
+\b save
+\b0  once you have passed your validations. \
+\
+If you update anything in your Model's source, simply reload the console environment with the following command\
+\
+>> reload!\
+\
+
+\b Checking your Errors\
+
+\b0 >> a = Article.new\
+=> #<Article id: nil, title: nil, published_at: nil, body: nil, created_at: nil, updated_at: nil>\
+>> a.save\
+=> false\
+>> a.errors.any?\
+=> true\
+>> a.errors\
+=> #<OrderedHash \{:title=>["can't be blank"], :body=>["can't be blank"]\}>\
+\
+Now you can use these errors in your code so it is easier for people to know what they did wrong, etc. \
+\
+3. Create a User class\
+>> rails generate model User email:string password:string\
+\
+>> rake db:migrate\
+\
+4. Create a Profile class\
+>> rails generate model Profile user_id:integer name:string birthday:date bio:text color:string twitter:string\
+\
+>> rake db:migrate\
+\
+5. Test in the console\
+\
+>> rails console\
+>> reload!\
+\
+>> User.create(:email => "scott@newfrontcreative.com", :password => "toughL0ve")>> profile = Profile.create(:user_id => 1, :name => "Scott Haines", :birthday => Time.local(1984, 3, 16), :bio => "I am not good at hunting or trapping, but I am good at programming", :color => "red", :twitter => "newfront")\
+\
+
+\b Making connections (working with ActiveRecord associations)\
+\
+
+\b0 User has_one :profile\
+Profile belongs_to :user\
+\
+>> user = User.first\
+>> profile = Profile.first\
+\
+>> user.profile = profile\
+>> user.save\
+=> true\
+\
+Now we can reference a User's profile from the main User Object. \
+\
+>> user\
+=> #<User id: 1, email: "scott@newfrontcreative.com", password: "toughL0ve", created_at: "2010-11-13 05:14:18", updated_at: "2010-11-13 05:14:18">\
+\
+>> user.profile\
+=> #<Profile id: 1, user_id: 1, name: "Scott Haines", birthday: "1984-03-16", bio: "I am not good at hunting or trapping, but I am good...", color: "red", twitter: "newfront", created_at: "2010-11-13 05:22:17", updated_at: "2010-11-13 05:22:17">\
+\
+So this is good for making "relations" in your relational database. Takes the effort out of working with large data sets. \
+\
+>> user.create_profile :name => "Scott Haines", :color => "green"\
+\
+Above is another way of working with associations. \
+\
+(Link people to Articles)\
+6. >> rails generate migration add_user_id_to_articles user_id:integer\
+>> rake db:migrate\
+\
+7. Test that everything works\
+>> rails console\
+\
+>> user = User.first\
+\
+>> article = Article.create(\'85)\
+\
+>> user.articles\
+\
+(notice that the article is automatically mapped to the user as long as the user_id is the same as the User id.)\
+\
+*Fancy Trick\
+\
+>> user.articles << Article.first\
+\
+We use the leftshift (<<) operator to append the Object to our User object.\
+\
+>> user.articles.first\
+>> user.articles.last\
+\
+>> user.articles.find(:first)\
+\
+You can search the association like you would a simple ActiveRecord object\
+\
+
+\b Creating ActiveRecord Lookup Tables\
+
+\b0 \
+has_and_belongs_to_many\
+\
+8. Create a Category Model\
+>> rails generate model Category name:string\
+\
+Link Article to Category\
+\
+>> rails generate migration create_articles_categories\
+\
+(This creates an empty migration)\
+\
+>> rake db:migrate\
+\
+(pops. you have now updated your migrations to latest, but never wrote the new table)\
+\
+open up your migrations (/db/migrate/<date>_create_articles_categories.rb)\
+add create_table method, no foreign key\
+\
+9. Seeding Data\
+(/db/seed.rb)\
+\
+- Add Objects that you want to fill your Database with initially\
+(*Note: Seed values will be populated in the database as many times as you call them, so seed your database once and leave it)\
+\
+rake db:setup (will recreate your database from scratch, then you can migrate and seed your database)\
+\
+10. \
+>> article = Article.first\
+>> article.categories << Category.first\
+\
+Now we have a category associated with an Article which is also associated with a User who has a profile\
+\
+>> article.user\
+=> returns the User object associated with it\
+\
+>> user = User.first\
+>> user.article\
+>> user.profile\
+>> user.articles.first.categories\
+\
+Associations in Ruby on Rails are powerful and simple to get, with a little practice\
+\
+11. Adding Comments\
+\
+>> rails generate model comment article_id:integer name:string body:text\
+>> rake db:migrate\
+\
+Now an article can have a comment, a user can view replies through their articles (comments), etc\
+\
+
+\b Advanced Searching\
+
+\b0 \
+>> Article.where("created_at > '23-03-2010' OR body NOT LIKE '%model%'")\
+\
+This says "find all Articles that were created after March 23rd, 2010 and whose body text does not contain the word 
+\b model
+\b0 . The modulo (%) that wraps the word means, find a partial match, or full match. \
+\
+
+\b Add variables into your Search\
+
+\b0 >> Article.where("published_at < ?", Time.now.to_s)\
+\
+>> Article.where
+\b ("title LIKE :search OR body LIKE :search",\{:search => '%Dog%'\})
+\b0 \
+=> [#<Article id: 1, title: "The Lazy Dog", published_at: "2010-11-13 06:11:45", body: "Jumps over the Quick Brown Fox", created_at: "2010-11-13 06:12:11", updated_at: "2010-11-13 06:12:11", user_id: 1>]\
+\
+
+\b View the generated SQL\
+
+\b0 >> Article.where("published_at < ?", Time.now.to_s).to_sql\
+=> "SELECT     `articles`.* FROM       `articles`  WHERE     (published_at < 'Sat Nov 13 10:48:50 -0800 2010')"\
+\
+
+\b ActiveRecord Search Methods\
+where
+\b0 (conditions)\
+\
+
+\b order
+\b0  ("string_for_field DESC|ASC)\
+\
+
+\b limit
+\b0  (Limit the returns to a specific number, or range)\
+\
+
+\b joins 
+\b0 (joined as an SQL Fragment)\
+\
+
+\b includes
+\b0  (joins associated tables into ActiveRecord Object)\
+\
+\
+Working with ActiveRecord and Rails (applying 
+\b scope
+\b0 )\
+\
+(Applied to article.rb)\
+\
+scope    :published, where("articles.published_at IS NOT NULL")\
+scope    :draft, where("articles.published_at IS NULL")\
+\
+# Remember that the lambda is a Ruby method for creating a method declaration on the fly\
+scope    :recent, lambda \{ published.where("articles.published_at > ?", 1.week.ago.to_date)\}\
+\
+# Add a custom search method into the Object\
+scope    :where_title, lambda \{|term| where("articles.title LIKE ?", "%#\{term\}%")\}\
+\
+# Example Usage: >> Article.published.where_title("Advanced Active Record")\
+\
+\
+
+\b Working with Validations
+\b0 \
+\
+validates    :email, :uniqueness => true\
+\
+>> User\
+=> User(id: integer, email: string, password: string, created_at: datetime, updated_at: datetime)\
+>> User.create(:email => "scott@newfrontcreative.com", :password => "joeuser")\
+=> #<User id: 3, email: "scott@newfrontcreative.com", password: "joeuser", created_at: "2010-11-13 19:04:59", updated_at: "2010-11-13 19:04:59">\
+>> User.create(:email => "scott@newfrontcreative.com", :password => "joeuser")\
+=> #<User id: nil, email: "scott@newfrontcreative.com", password: "joeuser", created_at: nil, updated_at: nil>\
+>> u = User.create(:email => "scott@newfrontcreative.com", :password => "joeuser")\
+=> #<User id: nil, email: "scott@newfrontcreative.com", password: "joeuser", created_at: nil, updated_at: nil>\
+>> u.errors\
+=> #<OrderedHash \{:email=>["has already been taken"]\}>\
+\
+validates    :email, :uniqueness => true, :length => \{:within => 5..50\}\
+\
+\
+\
+\
+}

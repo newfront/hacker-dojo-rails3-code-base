@@ -1,0 +1,185 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf350
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww16760\viewh11760\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\fs24 \cf0 1. Writing your first Rails Application (in one line of code).\
+\
+>> rails new dinner_scaffold\
+>> sudo rails generate scaffold Dinner name:string description:text planned_for:datetime notes:text\
+>> rake db:migrate\
+>> rails server\
+\
+http://localhost:3000/dinners/\
+http://localhost:3000/dinners/1 will show the first record if you have created one\
+\
+2. What makes scaffolding work, what steps are involved in actual rails setup (manual)   \
+    a. overview of the rails command line (rails generate <command>)\
+\
+    b. dissection of the rails framework (application folder structure)\
+\
+	/app\
+    		/controllers\
+		/models\
+		/helpers\
+		/mailers\
+		/views\
+\
+	/config\
+\
+	/db\
+		/migrate\
+\
+	/public\
+		/javascripts\
+\
+\
+    c. 
+\b REST and CRUD
+\b0 \
+	Rest.\
+	Representational State Transfer (REST). REST is a principle that is based on working with information in the form of a resource. Each of these resources has a specific interaction point which is normally represented using a URL. http://domain.com/users/deeplinking Would be a REST URL to perform a deeplinking action on the User(s) of a particular site. \
+\
+	REST is broken up into its HTTP protocol representations. \
+\
+	POST, GET, PUT, DELETE\
+\
+	These HTTP protocol methods have adopted the acronym "CRUD"\
+\
+	Create, Read, Update, Destroy\
+\
+    d. 
+\b What is a Route? How does the Rails Request Cycle Work?
+\b0 \
+	Routes in Rails are the URL representation of your Rails Controllers. Each Rails Controller is no more than a Ruby Class and each action (either a view state of a background process) is represented by specific Class Methods. \
+\
+	class UsersController < ApplicationController\
+	def index\
+	end\
+	end\
+\
+	This class would then be made available through the Rails system in the routes.\
+\
+	route    get    "users/index"\
+\
+	http://localhost:3000/users/index\
+\
+	would call UsersController::index, and would also look for a View in /app/views/users/index.html.erb\
+\
+	1. Open /config/routes.rb\
+\
+	2. Create your application "root" path\
+ 		root :to => "users#index"\
+\
+	3. Delete index.html from /public\
+\
+	4. rails server\
+	\
+	5. http://localhost:3000/ (should now be pointed to UsersController::index and displaying the content of /app/views/users/index.html.erb\
+\
+	
+\b Routing in Rails
+\b0 \
+	Routing in Rails has completely changed from version 2.3+ Rails to 3.0. If you are used to the old system of Routing your in for a whole redesign.\
+\
+	Breaking down a Route\
+\
+	
+\b route
+\b0   get  "users/index"  \
+	\
+	/users/index is now available as a get requested resource.\
+\
+	---------------------------------------------------\
+	
+\b Matched Routes (pseudo named routes)
+\b0 \
+\
+	match '/users' => 'users#index' \
+\
+	---------------------------------------------------\
+\
+	
+\b Named Routes\
+	
+\b0 \
+	match '/rails/routes/just/work' => "users#index\
+\
+	---------------------------------------------------------------\
+\
+	
+\b http://localhost:3000/users
+\b0  is now the same as 
+\b http://localhost:3000/users/index
+\b0  or 
+\b http://localhost:3000 
+\b0 since we have updated the routing to look for 
+\b root
+\b0  at the users index action, and 
+\b get
+\b0  "users/index" goes to the same place as 
+\b map 
+\b0 '/users' => "users#index and lastly 
+\b http://localhost:3000/rails/routes/just/work
+\b0  also ends up at UserController::index. \
+\
+\
+    e. 
+\b Working with only the Controllers and Views - with and without the command line\
+\
+	
+\b0 It is important to remember that you do not have to use the command line for everything, but it typically makes far less mistakes than we do. To build a Controller and give it some actions, we use the following line in our command line. \
+\
+	>> rails generate Controller articles index list show update destroy edit\
+	\
+	>> /usr/local/ruby19/bin/rails generate controller articles index list show update destroy edit\
+      		create  app/controllers/articles_controller.rb\
+      		 route  get "articles/edit"\
+      		 route  get "articles/destroy"\
+      		 route  get "articles/update"\
+       		route  get "articles/show"\
+       		route  get "articles/list"\
+       		route  get "articles/index"\
+      		invoke  erb\
+      		create    app/views/articles\
+      		create    app/views/articles/index.html.erb\
+      		create    app/views/articles/list.html.erb\
+     		create    app/views/articles/show.html.erb\
+     		create    app/views/articles/update.html.erb\
+      		create    app/views/articles/destroy.html.erb\
+      		create    app/views/articles/edit.html.erb\
+      		invoke  test_unit\
+      		create    test/functional/articles_controller_test.rb\
+      		invoke  helper\
+      		create    app/helpers/articles_helper.rb\
+      		invoke    test_unit\
+      		create      test/unit/helpers/articles_helper_test.rb\
+	\
+	So one little line of code generates everything we need from the 
+\b routes
+\b0  we need to view the different pages within our website, to the generating a nice little 
+\b helper
+\b0  method (we will look at more later), to even creating 
+\b tests
+\b0  and 
+\b views
+\b0  for our application.\
+	\
+    f. Working with render and redirect_to\
+        a. using Views or rendering directly to the window (:text =>)\
+\
+    g. Working with flash[:] messages\
+    \
+    h.  Working with errors\
+    \
+    i. Working with Gemfile, /config/database.yml\
+    \
+    j. Introduction to the Model\
+	rails generate model Person\
+    k. Working with seed.rb (rake db:seed) to prepopulate our data\
+\
+    l. Getting an application up and running and connected to a Datasource.\
+    m. Wrapping Up. What did we learn today. \
+    \
+n. Assignment #1}

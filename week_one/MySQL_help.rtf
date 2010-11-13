@@ -1,0 +1,20 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf320
+{\fonttbl\f0\fmodern\fcharset0 Courier;\f1\fmodern\fcharset0 Courier-Bold;}
+{\colortbl;\red255\green255\blue255;\red246\green246\blue246;\red0\green109\blue109;\red220\green0\blue50;
+}
+\margl1440\margr1440\vieww20900\viewh10980\viewkind0
+\deftab720
+\pard\pardeftab720\sl280\ql\qnatural
+
+\f0\fs24 \cf0 \cb2 sudo env \cf3 ARCHFLAGS
+\f1\b \cf0 =
+\f0\b0 \cf4 "-arch x86_64"\cf0  /usr/local/ruby19/bin/gem install mysql -- --with-mysql-config
+\f1\b =
+\f0\b0 /usr/local/mysql/bin/mysql_config\
+\
+MySQL Issues\
+\
+\pard\pardeftab720\ql\qnatural
+\cf0 \cb2 rake db:setup --trace (view what went wrong)\
+\
+If you find that your having issues connecting to MySQL through Rails, it is probably an issue with "Rails" expectations, by default the database.yml file will attempt to connect to mysql via the /tmp/mysqld.sock, however depending on how you installed mysql, this location might be /var/run/mysqld/mysqld.sock. When in doubt located your mysql.conf file and lookup the socket location.}
