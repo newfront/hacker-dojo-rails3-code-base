@@ -1,0 +1,144 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf350
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 Consolas;}
+{\colortbl;\red255\green255\blue255;\red234\green234\blue234;}
+\margl1440\margr1440\vieww17720\viewh13140\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\b\fs24 \cf0 Rails3 with Ruby
+\b0 \
+Instructor: Scott Haines\
+\
+\
+
+\b Prerequisites for class.
+\b0 \
+\
+1. You have a laptop\
+\
+2. You have ruby 1.9.2 installed\
+\
+3. You have rails 3.0.x installed\
+\
+4. You have MySQL running on your localhost\
+\
+\
+
+\b Prerequisites for this week's class\
+
+\b0 \
+1. You have worked in some type of Object Oriented Programming Language in the Past (or higher level programming language)\
+\
+2. You understand a little about Ruby Objects, and the Ruby Language. (preferably you came to the Ruby Primer session on November 7th. If not you can read the material at (https://github.com/newfront/hacker-dojo-rails3-code-base/tree/master/a_ruby_primer/)\
+\
+\
+
+\b Lesson 1
+\b0  (week one)\
+\
+Overview. Today we will be learning the basics of the Rails framework. \
+\
+1.) We will dive in with a quick example and then we will take a step back to reflect on "how" everything works when there is not much that clearly shows the Rails logic. \
+\
+2.) We will examine the 
+\b folder/directory 
+\b0 structure of the Rails framework, \
+\
+3.) We will then take a close look at two of the main 
+\b ruby classes
+\b0  for creating page flows a.) ActiveController, b.) ActiveView from the ActionPack. \
+\
+4.) We will examine the Ruby on Rails (Action Pack) Request Cycle. \
+\
+[A*] (makes a request) -> (URL: http://domain.com/controller/action) -> (Rails Class (routes.rb) Routing picks up the URL name) \{sends to the Action Controller with the url values packed into a params hash\} -> (Action Controller) -> \{sends its instance and class variables to the Action View\} and the final result is a rendered view / action being sent back to the request called [A*]\
+\
+5.) We will create a series of Action Controller methods (def show; #action; end) and Action Views (/app/views/controller_name/show.html.erb) to show how simple 
+\b ruby
+\b0  classes can inherit from Rails to create powerful web based applications with very little code required. (ActionController::Base)\
+\
+6.) Let's get a little project up and running\
+	a.) Create a new Rails Project (rails new /path/to/rails/new/projectname\
+	\
+	b.) Move into the Directory (cd /path/to/rails/new/projectname)\
+		* Now you are in what we call the Rails Root Directory this is the / of your rails project\
+\
+	c.) (Test your Database Connection) rake db:setup --trace\
+		* This should work fine since by default Rails uses sqlite3, but if you have a problem you probably need to reinstall the sqlite3 gem \
+		(
+\f1\fs28 \cb2 gem install sqlite3-ruby
+\f0\fs24 \cb1  )\
+\
+	(Note: We will cover switching this over to a mysql database later on, for now this is fine since we won't be talking directly to the DB yet)\
+\
+	d.) Now let's create a Action Controller\
+		(if you are pointing to an alternative build of ruby - just update the path to rails to your system path to rails\
+		sudo /usr/local/ruby19/bin/rails generate controller main index show \
+\
+		(if you have one install of ruby and one install of rails\
+		sudo rails generate controller main index show\
+\
+	e.) If you don't see any error messages then you have created a new Controller (main_controller.rb which lives in /app/controllers/) and you have also created to Action Views (index.html.erb, show.html.erb living in /app/views/main/)\
+\
+	(*Note: Ruby on Rails is convention based. If you follow the rules, then Rails will play nice with you. Above we kept a very controlled set of naming conventions, we used 
+\b main
+\b0  for our controller, and Rails created all of our subsequent views and info based off of that particular name. It is best to stick to where 
+\b rails
+\b0  is looking to find your project files.)\
+\
+	f.) Now you have a working 
+\b rails
+\b0  website, it isn't much but it is something. \
+	\
+	Run your server to see what you have created.\
+	g.) rails server \
+\
+7.) Getting Rid of the Default Welcome Page\
+	\
+	a.) delete /public/index.html from your project\
+	\
+	b.) refresh your page (you should see an error, can't find route '/'\
+	\
+	c.) open up your /config/routes.rb\
+		add "root :to => "main#index"\
+		save and refresh your localist view\
+		\
+	d.) now refresh your page again (you should see your main#index view on the screen)\
+\
+	So How does this work?\
+\
+8.) Making the page look nicer with a little CSS\
+\
+9.) Switching between views (using link_to) <%= link_to 'name', \{:controller => '', :action => ''\} %>\
+	* We are using one of Rails Helper methods to quickly create an html link\
+	This is the same as saying <a href="/main/show">name</a>\
+\
+10.) Now we have a shabby working Ruby on Rails website. What next?\
+\
+
+\b Working with Data and ActiveRecord\
+
+\b0 \
+1. ) make sure mysql is running on your computer (ps aux | rep mysql)\
+\
+2. ) now we are going to update our /config/database.yml file to point to our local MySQL database rather than to a little sqlite3 file. \
+\
+3. ) example\
+\
+development:\
+      host: 127.0.0.1\
+      adapter: mysql\
+      database: railsblog\
+      port: 3306\
+      username: root\
+      password:\
+      socket: /var/run/mysqld/mysqld.sock\
+      #socket: /tmp/mysqld.sock\
+\
+(*Note: Using 
+\b root
+\b0  as your database user goes against all security measures in any book, this is convenient on a local machine without sensitive data, but in the future on any production release I would hope you would have specific users with specific actions tailored to what you want that user to do and not to do. \
+	\
+\
+\
+\
+\
+}
