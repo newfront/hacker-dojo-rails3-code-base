@@ -1,0 +1,12 @@
+<h3>Create a New Burger</h3>
+<% if @burger.errors %>
+	<div class="errors">
+		<% @burger.errors.each do |error,info|%>
+			<span class="error_row">Burger <%= error %> <%= info.to_s %></span>
+		<% end %>
+	</div>
+<% end %>
+<%= form_for :burger, @burger, :url => { :action => "create" }, :html => {:class => "form_class"} do |f| %>
+  <%= f.text_field :name %>
+  <%= submit_tag "Create" %>
+<% end %>

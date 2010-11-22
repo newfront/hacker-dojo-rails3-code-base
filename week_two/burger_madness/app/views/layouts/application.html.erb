@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+	<%= @title %>
+	</title>
+  	<%= stylesheet_link_tag :all %>
+  	<%= javascript_include_tag "jquery","application" %>
+  	<%= csrf_meta_tag %>
+</head>
+<body>
+	<div id="mainwrap">
+		<div id="header">
+			<div id="branding">
+				<h3>Burger Madness</h3>
+				<p>Build it. Order it.</p>
+			</div>
+			
+			<div id="navigation">
+				<%= render "partials/main_navigation"%>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div id="content">
+			<%= yield %>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	<div id="footer">
+		<%= render "partials/main_footer"%>
+	</div>
+</body>
+</html>

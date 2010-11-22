@@ -1,0 +1,10 @@
+<h3>Place Order</h3>
+<p>Burger (<%= @burger.name %>)</p>
+<% if @burger.toppings.count >= 1 %>
+	<% @burger.toppings.each do |topping| %>
+		<p><%= topping.name %></p>
+	<% end %>
+	<p>Total: $<%= @burger.get_price %></p>
+<% end %>
+
+<%= link_to "Purchase", {:action => :create, :id => @burger.id}%>

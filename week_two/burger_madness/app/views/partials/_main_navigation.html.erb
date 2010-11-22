@@ -1,0 +1,5 @@
+<ul>
+	<li><%= link_to 'Burgers', {:controller => :burger, :action => :index}, :class => "nav_item" %></li>
+	<li><%= link_to 'Orders', {:controller => :order, :action => :index}, :class => "nav_item" %></li>
+	<li><%= link_to 'History', {:controller => :order, :action => :show, :id => "all"}, :class => "nav_item"%></li>
+</ul>

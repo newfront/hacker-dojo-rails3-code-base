@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  calories: 1
+  price: 1
+
+two:
+  name: MyString
+  calories: 1
+  price: 1

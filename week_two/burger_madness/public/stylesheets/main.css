@@ -1,0 +1,107 @@
+body
+{
+	margin:0;
+	padding:0;
+	font-family: 'Arial',sans-serif;
+	font-size: 14px;
+	color:#2b2b2b;
+	background:#cccccc;
+}
+
+h1,h2,h3,h4,h5,h6,ul,li,dl,dd,dt,p,form,button,input,textarea,label,legend,fieldset,img,a
+{
+	margin:0;
+	padding:0;
+}
+
+/* Mainwrapper and Layout */
+#mainwrap
+{
+	width:940px;
+	margin:0 auto;
+	background:#ffffff;
+	padding:0px;
+	position:relative;
+}
+
+#header
+{
+	display:block;
+	padding:10px 0px;
+	border-bottom:1px solid #999999;
+	background: transparent url(/images/burger_icon.png) no-repeat center left;
+}
+
+#navigation
+{
+	display:block;
+	width:auto;
+	position:relative;
+	float:right;
+	margin-right:20px;
+}
+
+#navigation ul
+{
+	display:block;
+}
+
+#navigation ul li
+{
+	display:inline-block;
+}
+
+#branding
+{
+	margin-left:200px;
+}
+
+.nav_item
+{
+	color: #ffffff;
+	padding:10px 15px;
+}
+
+.nav_item:active, .nav_item:visited, .nav_item:link
+{
+	text-decoration:none;
+	background:#1b1b1b;
+}
+
+.nav_item:hover
+{
+	background:#9F0000;
+}
+
+.clearfix
+{
+	clear:both;
+}
+
+#content
+{
+	padding:20px;
+}
+
+#footer
+{
+	background:#1b1b1b;
+	width:940px;
+	margin:0 auto;
+	padding:10px 0px;
+	position:relative;
+}
+
+.footer_info
+{
+	display:block;
+	margin-left:10px;
+}
+
+/* Errors */
+.error_row
+{
+	color: #990000;
+	padding:3px 0;
+	display:block;
+}

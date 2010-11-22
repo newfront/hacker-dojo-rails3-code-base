@@ -1,0 +1,131 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf350
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww12980\viewh11640\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\fs24 \cf0 Burger Madness\
+-----------------------------\
+1. create a new rails project (rails new burger_madness)\
+2. move into rails directory\
+\
+\
+Logic Overview\
+-----------------------------\
+1. A User wants to create a Custom Burger (view the caloric overview of a Burger, create a sum of the new price of burger with custom components)\
+\
+2. User can add toppings to the burger (keeping it simple, add new toppings, edit current toppings)\
+\
+3. Application keeps track of burgers user has created in Session hash. \
+\
+\
+Model Overview\
+----------------------------\
+1. Burger (table = burgers (id, name))\
+(rails generate model Burger name:string)\
+\
+2. Topping (table = toppings (id, name, calories, price))\
+(rails generate model Topping name:string calories:integer price:integer)\
+\
+(Note*: You may want to write a note to yourself on how to keep track of prices, dollars, or cents)\
+\
+integer (is whole number, not floating point)\
+\
+3. Burger_Topping (table = burger_toppings (id, burgers_id, toppings_id))\
+(rails generate migration burger_toppings, edit migration (skip id, :id => false))\
+open Migration\
+-------------\
+class BurgerToppings < ActiveRecord::Migration\
+    def self.up\
+        create_table :burgers_toppings, :id => false do |t|\
+            t.references    :burger\
+            t.references    :topping\
+        end\
+    end\
+    \
+    def self.down\
+        drop_table    :burgers_toppings\
+    end\
+end\
+---------------\
+\
+4. Order (table = orders (id, burgers_id, price, date))\
+(rails generate model Order burgers_id:integer price:integer)\
+\
+----------------------\
+Starting Project\
+---------------------\
+1. run a Rake setup for your DB\
+rake db:setup --trace\
+\
+2. run your first migrations\
+rake db:migrate\
+\
+(Note*: if you make a mistake, run 
+\b rake db:rollback
+\b0  to run your migrations again)\
+\
+3. Create your Burger controller\
+(rails generate controller Burger index new create edit show destroy)\
+\
+4. Create your Order controller\
+(rails generate controller Order index show)\
+\
+5. Check your Routes (/config/routes.rb)\
+  - Add root path (root :to => "burger#index")\
+\
+6. Delete /public/index.html\
+\
+7. Create updated /layout/application.html.erb\
+ -> breakout navigation and footer into partials\
+\
+8. Update CSS to brand the layout (main.css)\
+\
+9. Create some Data\
+ (use seeds.db or make this yourself)\
+\
+Toppings (Topping.create(:name => "pickles", :calories => 35, :price => 1))\
+\
+10. You will have no History for your Orders until you make some Orders\
+-> Add Toppings\
+-> Add some Burgers\
+-> Add some Orders\
+\
+---------------------------------\
+has_many, has_and_belongs_to_many, belongs_to Relationships\
+\
+(Each Burger has many Toppings, each Topping has Burgers who reference them, each Burger is also part of every Order, while Toppings have Prices that help us calculate the Order price of each Burger.)\
+\
+11. Open rails console\
+>> t = Burger.last\
+>> t.toppings << Topping.last\
+>> t.save\
+\
+>> t.toppings.count => 1\
+\
+(Note:* You notice now that you can reference all of the Burger toppings directly through your main Burger object. If you have worked with SQL before, you have probably done round robin lookups to find relationships between data and this just makes it easy to do that.)\
+\
+Think about things you want to get from your data, one would be Price (Topping has Price)\
+\
+>> t.toppings.each \{|top| puts "Topping Price? (#\{top.price\})"\}\
+Topping Price? (6)\
+Topping Price? (1)\
+Topping Price? (1)\
+Topping Price? (9)\
+\
+Think about adding up the price totals in your Model. I would want to find the price for each Burger with relative ease, we can do this with some high level Model custom functions using the Ruby lambda method. \
+\
+Burger Model (burger.rb)\
+\
+add method\
+\
+def get_price\
+end\
+\
+>> b = Burger.last\
+>> b.get_price\
+=> 17\
+# number will vary on the price per topping for your Burgers\
+\
+\
+}

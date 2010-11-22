@@ -1,0 +1,21 @@
+<h3>Add Toppings</h3>
+<p>Burger has <%= @burger.toppings.count %> Toppings</p>
+<% if @burger.toppings.count >= 1 %>
+	<% @burger.toppings.each do |topping| %>
+		<p><%= topping.name %></p>
+	<% end %>
+	<p>Total: $<%= @burger.get_price %></p>
+<% end %>
+
+<div id="burger_toppings">
+	<%= form_for :topping, @topping, :url => {:action => "do_add_topping", :id => @burger_id} do |f|%>
+		<select name="toppings" id="toppings">
+			<% @topping.each do |top| %>
+				<option value="<%= top.id %>"><%= top.name %></option>
+			<% end %>
+		</select>
+		<%= submit_tag "Add Topping" %>
+	<% end %>
+</div>
+
+<%= link_to "Place Order", {:controller => :order, :action => :new, :id => @burger_id} if @burger.toppings.count >= 1%>

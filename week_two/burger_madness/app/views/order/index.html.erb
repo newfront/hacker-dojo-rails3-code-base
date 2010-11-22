@@ -1,0 +1,9 @@
+<h3><%= @page_title %></h3>
+<% @orders.each do |order|%>
+	<div class="order">
+		<% order.inspect %>
+		<% @burger = order.burger %>
+		<%= @burger.name %> | <%= @burger.updated_at.strftime("%A %B %d %Y")%>
+		
+	</div>
+<% end %>
