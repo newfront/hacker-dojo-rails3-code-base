@@ -1,0 +1,7 @@
+<h3>Login</h3>
+<%= form_for @user, :url => {:action => :result} do |f|%>
+	<%= f.text_field :username %>
+	<%= f.password_field :password %>
+	<%= submit_tag "Login" %>
+	<% puts "This is cool"%>
+<% end %>
