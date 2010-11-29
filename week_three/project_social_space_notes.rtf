@@ -1,0 +1,254 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf350
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww19900\viewh13840\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\b\fs24 \cf0 Social Space
+\b0 \
+--------------------\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b \cf0 Background on Project\
+
+\b0 Over the course of the next four classes we are going to work on creating a social network in Rails 3. The base of this network can be used for unlimited different networks, we have Users, who can post comments, rate (Reviews), and upload images for their Reviews. Users can subscribe to, or unsubscribe from Users and a user will get breakdown emails for their activity on the website. \
+\
+
+\b Models\
+
+\b0 User, Ratings, Comments, Follower, Media, User_Profile\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 \
+1. Create a new Rails Project\
+>> rails new social_space -d mysql\
+\
+2. Move into the directory\
+>> cd social_space\
+\
+3. Do a sudo 
+\b bundle install
+\b0  to get the mysql2 gem (or continue using mysql gem)\
+\
+4. Setup your Database in /config/database.yml . (We will be using MySQL, you are free to use sqlite3 but I will not talk about setting up MySQL, it should be running by now if you want to use it). \
+ - database.yml\
+ - *make sure your mysql database is pointed to the correct mysql socket (
+\b /tmp/mysqld.sock
+\b0  is the common location based on binary installs, /var/run/mysqld/mysqld.sock is the location if you are using the Mac OSx DMG based MySQL 5.1+ install)\
+\
+5. Run 
+\b rake db:setup\
+
+\b0 \
+6. Run 
+\b rake db:migrate\
+\
+
+\b0 ------------------------------------------------------------\
+\
+Let's Create some Models\
+\
+1. Create the User model \
+username, password, email_address\
+>> rails generate model User username:string password:string email_address:string\
+>> rake db:migrate\
+\
+2. Create the User_Profile Model (link to a user_id)\
+\
+User --> User_Profile (via) user_id\
+>> rails generate model User_Profile user_id:integer first_name:string last_name:string birthdate:datetime twitter:string biography:text\
+\
+3. Connect the User with User_Profile (has_one, belongs_to)\
+	a. Open /app/models/user.rb\
+            b. add 
+\b has_one    :user_profile\
+	
+\b0 c. Open /app/models/user_profile.rb\
+	d. add 
+\b belongs_to
+\b0     
+\b :user\
+\
+
+\b0 4. Open your Rails console 
+\b rails console\
+
+\b0 5. inspect your User and UserProfile\
+>> User => \
+>> UserProfile =>\
+\
+# Create a new User, and associate a UserProfile with that User\
+>> u = User.create(:username => "scotty",:password => "1234",:email_address => "scott@newfrontcreative.com")\
+>> u.user_profile = UserProfile.create(:user_id => 1,:first_name => "Scott",:last_name => "Haines", :birthdate => Time.utc(1984,"mar",16,20,15,1), :twitter => "@newfront", :biography => "I am an avid programmer who has been working in rails for the past 3 years")\
+>> u.save\
+\
+
+\b Now. \
+\
+
+\b0 >> u.user_profile\
+=> #<UserProfile id: 1, user_id: 1, first_name: "Scott", last_name: "Haines", birthdate: "1984-03-16 20:15:01", twitter: "@newfront", biography: "I am an avid programmer who has been working in rai...", created_at: "2010-11-29 04:48:46", updated_at: "2010-11-29 04:48:46">\
+\
+
+\b So now we break down the User Generation Process. 
+\b0 \
+1. User is generated\
+2. User then can come back and fill in their profile if they feel like it. \
+\
+-------------------------------------------------------\
+\
+User's of our Social Network will be able to generate content (Reviews, Recipes)\
+\
+
+\b Review.rb
+\b0 \
+\
+Reviews can be made about Businesses (think of Yelp), and each review can have comments, ratings and tags, eventually we will also be adding some support for images. \
+\
+1. Create your Review model\
+\
+>> rails generate model Review name:string description:text\
+\
+2. 
+\b rake db:migrate\
+\
+
+\b0 Think about the following. 1.) 
+\b every
+\b0  User has 
+\b one
+\b0  profile, however 
+\b each
+\b0  User can have 2.) 
+\b many
+\b0  Reviews and 3.) 
+\b many
+\b0  comments on those 
+\b Reviews\
+\
+
+\b0 3. Create a users_reviews lookup table\
+\
+>> rails generate migration reviews_users\
+\
+4. Open /db/migrate/xxxxxxxxxxxx_reviews_users.rb\
+Add the following. \
+\
+class UsersReviews < ActiveRecord::Migration\
+    def self.up\
+        # Create a user to reviews lookup table\
+        # Each User has_and_belongs_to_many Reviews\
+        create_table :reviews_users, :id => false do |t|\
+            t.references    :user\
+            t.references    :review\
+        end\
+    end\
+\
+    def self.down\
+        drop_table  :reviews_users\
+    end\
+end\
+\
+5. Save and 
+\b migrate
+\b0  (rake db:migrate)\
+\
+Now we can lookup all reviews created by a User after we add some rails magic to the ruby files. \
+\
+6. Open /app/models/review.rb\
+	a. add 
+\b has_and_belongs_to_many    :users\
+	
+\b0 b. save\
+\
+7. Open /app/models/user.rb\
+	a. add 
+\b has_and_belongs_to_many    :reviews\
+\
+
+\b0 8. Now you can associate a user with their Reviews. Look up a User, once you have their User object you can add to their "reviews" array by just pushing and saving a Review object to that User.  \
+\
+>> user = User.last\
+>> user.reviews << Review.last\
+>> user.save\
+\
+Easily find which 
+\b User
+\b0  created a Review\
+\
+>> r = Review.last\
+>> r.users\
+\
+-------------------------------------------------------\
+\
+
+\b Now 
+\b0 lets make sure each Review can have a comment, and make sure each User can be tracked back to the Comment and the Review\
+\
+>> rails generate model comment body:text review_id:integer\
+>> rake db:migrate\
+\
+1. Add a 
+\b has_one    :review
+\b0 \
+2. Add a 
+\b has_many    :comment\
+\
+
+\b0 Now whenever you create a new 
+\b Comment
+\b0 , you can find it or get an Array of comments via each Review\
+\
+>> Comment.create(:body => "This is a comment", :article_id => 1)\
+>> r = Review.first\
+>> r.comments\
+=> [#<Comment id: 1, body: "It really is a nice place to program", review_id: 1, created_at: "2010-11-29 06:01:02", updated_at: "2010-11-29 06:01:02">]\
+\
+Let's lastly get all comments a user has posted. To do this we need to add a user_id to the Review model. \
+\
+3. >> rails generate migration add_user_id_to_reviews\
+\
+4. Edit the migration, \
+class AddUserIdToReviews < ActiveRecord::Migration\
+  def self.up\
+      add_column    :reviews, :user_id, :integer\
+  end\
+\
+  def self.down\
+      remove_column    :reviews, :user_id\
+  end\
+end\
+\
+5. Migrate (rake db:migrate)\
+\
+6. Update your Reviews, add a reference to the User\
+\
+7. As long as a review has a User, we can now find the User's comments (on reviews) through those Reviews. \
+\
+>> u = User.first\
+>> u.replies\
+=> [#<Comment id: 1, body: "It really is a nice place to program", review_id: 1, created_at: "2010-11-29 06:01:02", updated_at: "2010-11-29 06:01:02">]\
+\
+This is all made possible through our Data associations. \
+\
+User.rb (has_many    :reviews)\
+Review.rb (has_many    :comments)\
+Comment.rb (has_one    :review)\
+\
+So now each User -> Review -> Comment as :replies\
+\
+has_many    :replies, :through => :reviews, :source => :comments\
+\
+---------------------------------------------------------------------\
+\
+Now that we have the data portion of the social network complete (Basic), we can go ahead and start doing something with our Social Network. \
+\
+1. We will create a way to create new users\
+2. We will allow Users to edit their profile (add some more information)\
+3. Users can post Reviews\
+4. Users can edit Reviews\
+5. Users can post Comments\
+\
+\
+\
+}
