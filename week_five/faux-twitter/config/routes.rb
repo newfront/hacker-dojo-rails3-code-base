@@ -22,7 +22,7 @@ FauxTwitter::Application.routes.draw do
   match 'signup' => "signup#new"
   
   match 'session/destroy' => "session#destroy"
-  #match 'status/new' => "status#new"
+  match 'status/new' => "status#new"
 
   resources :user
   resources :status 
