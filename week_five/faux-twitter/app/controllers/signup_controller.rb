@@ -1,4 +1,5 @@
 class SignupController < ApplicationController
+    
     def new
         # get
         # User.new
@@ -14,6 +15,7 @@ class SignupController < ApplicationController
         if params[:commit] == "Sign Up"
             # We know the user actually pressed a button to get here
             @user = User.new(params[:user])
+            #if @user.save && !@user.new_record?
             if @user.save
                 flash[:notice] = "Horray. You have completed your Signup. We were able to Save your Account."
                 redirect_to home_path
@@ -21,8 +23,8 @@ class SignupController < ApplicationController
                 if @user.errors
                     render :action => :new
                 end 
+                
             end
         end
-
     end
 end

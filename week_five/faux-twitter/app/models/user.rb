@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
     #User(id: integer, username: string, password: string, email: string, created_at: datetime, updated_at: datetime)
-    
+    puts "USER BEING CREATED"
     validates :username, :presence => true
     validates :username, :uniqueness => true
     validates :email, 

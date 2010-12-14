@@ -1,11 +1,8 @@
 <div class="main_form_wrapper">
-	<% if @user.errors.count >= 1 || flash[:error]%>
+	<% if @user.errors.count >= 1%>
 	<div id="errors">
 		<% @user.errors.each do |error,message|%>
 			<span class="error_span"><span class="spec_error"><%= error %></span> <%= message %></span>
-		<% end %>
-		<% if flash[:error]%>
-			<span class="error_span"><span class="spec_error"><%= flash[:error]%></span>
 		<% end %>
 	</div>
 	<% end %>

@@ -11,6 +11,10 @@ FauxTwitter::Application.routes.draw do
   get "user_preference/edit"
 
   get "user_preference/destroy"
+  
+  get "signup/new"
+  
+  post "signup/create"
 
   
   
@@ -18,12 +22,12 @@ FauxTwitter::Application.routes.draw do
   match 'signup' => "signup#new"
   
   match 'session/destroy' => "session#destroy"
-  match 'status/new' => "status#new"
+  #match 'status/new' => "status#new"
 
   resources :user
   resources :status 
   resources :session
-  resources :signup
+  #resources :signup
 
   # Sample resource route with more complex sub-resources
   #   resources :products do
