@@ -1,0 +1,16 @@
+<%
+# new status for the user
+#UserStatus(id: integer, user_id: integer, status_update: text, pub_date: datetime, created_at: datetime, updated_at: datetime)
+%>
+<% if flash[:error] %>
+	<div id="errors">
+		<span class="error_span"><span class="spec_error"><%= flash[:error]%></span></span>
+	</div>
+<% end %>
+<%= form_for @status, :url => {:controller => :status, :action => :create}, :html => {:class => "user_forms"} do |f| %>
+<div class="block mtt mbt">
+	<%= label_tag(:status_update, "Status",:class=>"mlt top_label") %>
+	<%= f.text_area :status_update, :class => 'mlt mrt sinput', :size=>"60x10"%>
+</div>
+<%= f.submit "Tweet", :class => "glb_action_button mlt"%>
+<% end %>

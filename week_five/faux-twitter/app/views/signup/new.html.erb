@@ -1,0 +1,27 @@
+<div class="main_form_wrapper">
+	<% if @user.errors.count >= 1 || flash[:error]%>
+	<div id="errors">
+		<% @user.errors.each do |error,message|%>
+			<span class="error_span"><span class="spec_error"><%= error %></span> <%= message %></span>
+		<% end %>
+		<% if flash[:error]%>
+			<span class="error_span"><span class="spec_error"><%= flash[:error]%></span>
+		<% end %>
+	</div>
+	<% end %>
+	<%= form_for @user, :url => { :controller => 'signup', :action => "create" }, :html => {:class => "user_forms"} do |f| %>
+	<div class="block mtt mbt">
+		<%= label_tag(:username, "Select a Username",:class=>"mlt top_label") %>
+		<%= f.text_field :username, :class => 'mlt mrt sinput'%>
+	</div>
+	<div class="block mtt mbt">
+		<%= label_tag(:username, "Think up a Smart Password",:class=>"mlt top_label") %>
+		<%= f.password_field :password, :class => 'mlt mrt sinput'%>
+	</div>
+	<div class="block mtt mbt">
+		<%= label_tag(:username, "Let us know your real email.",:class=>"mlt top_label") %>
+		<%= f.text_field :email, :class => 'mlt mrt sinput'%>
+	</div>
+	<%= f.submit "Sign Up", :class => "glb_action_button mlt"%>
+	<% end %>
+</div>

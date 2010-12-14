@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  full_name: MyString
+  birthday: 
+  twitter: 
+  background: 
+  theme: 1
+
+two:
+  full_name: MyString
+  birthday: 
+  twitter: 
+  background: 
+  theme: 1

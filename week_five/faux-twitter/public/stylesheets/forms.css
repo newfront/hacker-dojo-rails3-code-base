@@ -1,0 +1,64 @@
+#main_form_wrapper
+{
+	padding:10px;
+}
+
+/* User Forms */
+.user_forms
+{
+	margin:5px;
+	padding:5px;
+	background:#ffffff;
+}
+
+.top_label
+{
+	display:block;
+	margin-bottom:3px;
+}
+
+.block
+{
+	display:block;
+}
+
+.sinput
+{
+	padding:5px;
+}
+
+.mlt
+{
+	margin-left:10px;
+}
+.mrt
+{
+	margin-right:10px;
+}
+.mbt
+{
+	margin-bottom:10px;
+}
+
+.mtt
+{
+	margin-top:10px;
+}
+
+.error
+{
+	border:1px solid #990000;
+	color:#990000;
+}
+
+.fill
+{
+	width:100%;
+	display:block;
+}
+
+.padtopbtm
+{
+	padding-top:10px;
+	padding-bottom:10px;
+}

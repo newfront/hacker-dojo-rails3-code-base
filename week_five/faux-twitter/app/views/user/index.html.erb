@@ -1,0 +1,9 @@
+<div id="contents">
+	<% @users.each do |user| %>
+		<div class="show_users_row">
+			<span class="mlt user_profile_picture"></span>
+			<span class="user_username"><%= link_to user.username, user_path(user.id), :class => 'user_highlight'%></span>
+			<span class="user_signup_date">User Since <%= user.created_at.strftime("%b %d %Y")%></span>
+		</div>
+	<% end %>
+</div>

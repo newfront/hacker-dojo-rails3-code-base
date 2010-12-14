@@ -1,0 +1,22 @@
+.show_users_row
+{
+	display:block;
+	padding:10px 0;
+	border-bottom:1px dotted #333333;
+	background:#000000;
+}
+
+.user_username
+{
+	color:#ffcc33;
+}
+
+.user_signup_date
+{
+	color:#363636;
+}
+
+.user_highlight
+{
+	color:#ffcc33;
+}

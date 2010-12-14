@@ -1,0 +1,8 @@
+<% if flash[:notice] %>
+	<div id="notices">
+		<p><%= flash[:notice]%></p>
+	</div>
+<% end %>
+<div id="content">
+	<%= render :partial => 'partials/user_status', :locals => {:userid => 'all'}%>
+</div>

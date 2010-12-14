@@ -1,0 +1,55 @@
+/* 
+CSS3 Gradients
+http://gradients.glrzad.com/
+
+CSS3 Text Shadows
+http://www.css3.info/preview/text-shadow/
+*/
+.glb_action_button
+{
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	
+	/* Give your buttons a CSS3 Upgrade */
+	background: -webkit-gradient(
+	    linear,
+	    left bottom,
+	    left top,
+	    color-stop(0.15, rgb(26,63,102)),
+	    color-stop(0.58, rgb(90,139,176)),
+	    color-stop(0.79, rgb(40,110,148))
+	);
+	background: -moz-linear-gradient(
+	    center bottom,
+	    rgb(26,63,102) 15%,
+	    rgb(90,139,176) 58%,
+	    rgb(40,110,148) 79%
+	);
+	
+	padding:5px 10px;
+	border:1px solid transparent;
+	color:#ffffff;
+	cursor:pointer;
+	text-shadow: 2px 2px 2px #000;
+}
+
+.glb_action_button:hover
+{
+	background: -webkit-gradient(
+	    linear,
+	    left bottom,
+	    left top,
+	    color-stop(0.15, rgb(26,102,44)),
+	    color-stop(0.58, rgb(92,176,97)),
+	    color-stop(0.79, rgb(41,148,66))
+	);
+	background: -moz-linear-gradient(
+	    center bottom,
+	    rgb(26,102,44) 15%,
+	    rgb(92,176,97) 58%,
+	    rgb(41,148,66) 79%
+	);
+	color:#ffffff;
+	cursor:pointer;
+}

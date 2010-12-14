@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= @page_title %></title>
+  <%= stylesheet_link_tag :all, "main_style","forms","buttons","errors","users", "statuses"%>
+  <%= javascript_include_tag "jquery","application"%>
+ 
+  <%= csrf_meta_tag %>
+</head>
+<body>
+	<%= render :partial => '/partials/main_header'%>
+	<div id="mainwrap">
+		
+		<%= yield %>
+		
+	</div>
+	<div class="clearfix"></div>
+	<div id="footer">
+	</div>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<div id="header">
+	<h3>TwitSpace</h3>
+	<div id="navigation">
+		<ul>
+			<li><%= link_to "Home", home_path %></li>
+			<% if !session[:user] %>
+				<li><%= link_to "Login", new_session_path%></li>
+				<li><%= link_to "Sign Up", signup_path %></li>
+			<% end %>
+			<% if session[:user]%>
+				<li><%= link_to "Profile", user_path(session[:user]["id"])%></li>
+				<li><%= link_to "Twit", status_new_path %></li>
+				<li><%= link_to "Logout", session_destroy_path %></li>
+			<% end %>
+		</ul>
+	</div>
+</div>

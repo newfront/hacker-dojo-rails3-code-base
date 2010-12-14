@@ -1,0 +1,20 @@
+#errors
+{
+	padding:10px;
+	border:1px solid #990000;
+	background:#cccccc;
+	margin-bottom:5px;
+}
+
+.error_span
+{
+	display:block;
+	margin-bottom:5px;
+	color:#000000;
+}
+
+.spec_error
+{
+	color:#990000 !important;
+	font-weight:bold;
+}

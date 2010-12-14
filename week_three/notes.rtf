@@ -16,4 +16,10 @@ protected \
 \
 def encrypted(val)\
     return Digest::SHA1.hexdigest(val.to_s)\
-end}
+end\
+\
+----------------------------------\
+\
+Recreate User login\
+1. Add logic to User Model to encrypt the User's name (username)\
+2. Now when a user is added into the database (encrypt the username first)}

@@ -1,0 +1,34 @@
+<%
+  #userid
+  # Get user with id of 4, find all statuses
+	if userid != "all"
+		@u = User.find(userid.to_i)
+		@type = "single"
+	elsif userid.is_a? String
+		@s = UserStatus.where(:user_id != 0)
+		@type = "all"
+	end
+%>
+<% if @u.is_a? User %>
+	<% @u.user_statuses.each do |status| %>
+		<div class="status_update">
+			<div class="user_status">
+				<%= status.status_update %> 
+			</div>
+			<div class="user_status_time">	
+				By <%= link_to @u.username ,user_path(@u.id),:class => 'user_highlight'%> <%= status.created_at.strftime("%b %d %Y %I:%M:%S")%></div>
+			</div>
+	<% end %>
+<% elsif @type = "all"%>
+	<% @s.each do |status| %>
+		<div class="status_update">
+			<div class="user_status">
+				<%= status.status_update %> 
+			</div>
+			<div class="user_status_time">	
+				By <%= link_to "#{status.user.username}" ,user_path(status.user.id),:class => 'user_highlight'%> <%= status.created_at.strftime("%b %d %Y %I:%M:%S")%></div>
+			</div>
+	<% end %>
+<% else %>
+	<p>No Tweets.</p>
+<% end %>

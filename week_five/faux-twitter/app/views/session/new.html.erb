@@ -1,0 +1,18 @@
+<div class="main_form_wrapper">
+	<% if flash[:errors]%>
+	<div id="errors">
+		<span class="error_span"><span class="spec_error"><%= flash[:errors]%></span></span>
+	</div>
+	<% end %>
+	<%= form_for @user, :url => { :controller => 'session', :action => "create" }, :html => {:class => "user_forms"} do |f| %>
+	<div class="block mtt mbt">
+		<%= label_tag(:username, "Your Username",:class=>"mlt top_label") %>
+		<%= f.text_field :username, :class => 'mlt mrt sinput'%>
+	</div>
+	<div class="block mtt mbt">
+		<%= label_tag(:username, "Your Password",:class=>"mlt top_label") %>
+		<%= f.password_field :password, :class => 'mlt mrt sinput'%>
+	</div>
+	<%= f.submit "Log In", :class => "glb_action_button mlt"%>
+	<% end %>
+</div>

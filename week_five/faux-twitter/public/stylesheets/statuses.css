@@ -1,0 +1,22 @@
+.status_update
+{
+	display:block;
+	background:#ffffff;
+	border:1px solid #ffffff;
+	padding:5px
+} 
+.user_status
+{
+	color:#2b2b2b;
+	font-size:110%;
+	display:block;
+	margin-bottom:2px;
+	margin-left:10px;
+} 
+.user_status_time
+{
+	font-size:90%;
+	color:#999999;
+	display:block;
+	margin-left:10px;
+}
