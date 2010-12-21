@@ -19,8 +19,8 @@ class MainController < ApplicationController
       #render :text => "Last Tweet : #{@status.status_update}"
       
       # the partial is rendered out using the local variable from the parameters params[:what_info]
-      render :text => @status.status_update
-      #render :partial => '/partials/add_content_now', :locals =>{:my_info => the_info}
+      #render :text => @status.status_update
+      render :partial => '/partials/add_content_now', :locals =>{:my_info => @status}
       
   end
 
