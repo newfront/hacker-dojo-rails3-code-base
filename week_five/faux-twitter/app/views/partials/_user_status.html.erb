@@ -1,13 +1,14 @@
 <%
   #userid
   # Get user with id of 4, find all statuses
-	if userid != "all"
-		@u = User.find(userid.to_i)
-		@type = "single"
-	elsif userid.is_a? String
-		@s = UserStatus.where(:user_id != 0)
-		@type = "all"
-	end
+	# unless userid == "all"
+	#if userid != "all"
+	#	@u = User.find(userid.to_i)
+	#	@type = "single"
+	#elsif userid.is_a? String
+	#	@s = UserStatus.where(:user_id != 0)
+	#	@type = "all"
+	#end
 %>
 <% if @u.is_a? User %>
 	<% @u.user_statuses.each do |status| %>
@@ -19,7 +20,7 @@
 				By <%= link_to @u.username ,user_path(@u.id),:class => 'user_highlight'%> <%= status.created_at.strftime("%b %d %Y %I:%M:%S")%></div>
 			</div>
 	<% end %>
-<% elsif @type = "all"%>
+<% elsif @type == "all"%>
 	<% @s.each do |status| %>
 		<div class="status_update">
 			<div class="user_status">

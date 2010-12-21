@@ -20,3 +20,13 @@
 	display:block;
 	margin-left:10px;
 }
+
+.cool_div
+{
+	display:block;
+	background:#ffffff;
+	padding:10px;
+	border:1px solid #cccccc;
+	font-size:15px;
+	color:#990000;
+}

@@ -15,7 +15,7 @@ class SessionController < ApplicationController
         #"user"=>{"username"=>"matt", "password"=>"[FILTERED]"}, "commit"=>"Log In"}
 
         if params[:commit] == "Log In"
-            @current = u = User.find_by_username_and_password(params[:user][:username],params[:user][:password])
+            @current = User.find_by_username_and_password(params[:user][:username],params[:user][:password])
             if @current.is_a? User
                 # Start Saving Session Info for the User
                 puts params[:user].inspect

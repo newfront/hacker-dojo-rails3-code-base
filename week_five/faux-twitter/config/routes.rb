@@ -1,6 +1,8 @@
 FauxTwitter::Application.routes.draw do
   
   get "main/index"
+  
+  get "main/find_me_info"
 
   get "user_preference/show"
 
