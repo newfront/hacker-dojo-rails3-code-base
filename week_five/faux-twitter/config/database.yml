@@ -27,3 +27,15 @@ development:
 #  database: db/production.sqlite3
 #  pool: 5
 #  timeout: 5000
+production:
+  #adapter: sqlite3
+  #database: db/development.sqlite3
+  #pool: 5
+  #timeout: 5000
+  encoding: utf8
+  adapter:   mysql2
+  database:  dojo-rails
+  pool:  5
+  username: root
+  password:      
+  socket: /tmp/mysql.sock

@@ -13,7 +13,7 @@ $(document).ready(function()
 		$.ajax({
 			type : "GET",
 			url : "/main/find_me_info",
-			data : "what_info=6",
+			data : "what_info=3",
 			success: function(msg)
 			{
 				//alert(msg);

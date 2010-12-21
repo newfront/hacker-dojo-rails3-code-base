@@ -1,6 +1,9 @@
 <%
 #my_info = @status from main_controller
+@user = my_info.user
 %>
 <div id="add_content_now">
+	
+	<p>Welcome to our website,.... <%= @user.username %></p>
 	<p><%= my_info.status_update %></p>
 </div>
